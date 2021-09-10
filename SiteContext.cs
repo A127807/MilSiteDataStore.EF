@@ -16,12 +16,23 @@ namespace MilSiteDataStore.EF
 		public DbSet<Location> Locations { get; set; }
 		public DbSet<LocationType> LocationTypes { get; set; }
 
+		public DbSet<Amenitie> Amenities { get; set; }
+
+		public DbSet<Space> Spaces { get; set; }
+
+		public DbSet<SpacePhoto> SpacePhotos { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Location>()
 				.HasKey(l => l.LocId);
 			modelBuilder.Entity<LocationType>()
 				.HasKey(l => l.LocTypeId);
+			modelBuilder.Entity<Amenitie>()
+				.HasKey(s => s.AmID);
+			modelBuilder.Entity<Space>()
+				.HasMany(p => p.SpacePhotos)
+				.WithOne(s => s.Space)
+				.HasForeignKey(s => s.SpaceId);
 
 
 			//seeding
@@ -32,10 +43,29 @@ namespace MilSiteDataStore.EF
 				);
 			modelBuilder.Entity<LocationType>()
 				.HasData(
-				new LocationType { LocTypeId = 1, LocType = "Marina"},
+				new LocationType { LocTypeId = 1, LocType = "Marina" },
 				new LocationType { LocTypeId = 2, LocType = "Campground" },
 				new LocationType { LocTypeId = 3, LocType = "Hotel" }
 				);
-	}
+			modelBuilder.Entity<Amenitie>()
+				.HasData(
+				new Amenitie { AmID = 1, IsFirewood = false, IsResturaunt = true, IsStore = true },
+				new Amenitie { AmID = 2, IsFirewood = true, IsResturaunt = false, IsStore = true },
+				new Amenitie { AmID = 3, IsFirewood = false, IsResturaunt = true, IsStore = true }
+				);
+			modelBuilder.Entity<Space>()
+				.HasData(
+				new Space { SpaceId = 1, SpaceNumber = 1, SpacePhotoId = 1 },
+				new Space { SpaceId = 2, SpaceNumber = 2, SpacePhotoId = 2 },
+				new Space { SpaceId = 3, SpaceNumber = 3, SpacePhotoId = 3 }
+				);
+			modelBuilder.Entity<SpacePhoto>()
+				.HasData(
+				new SpacePhoto { SpacePhotoId = 1, SpaceId = 1, Photo = "photo1" },
+				new SpacePhoto { SpacePhotoId = 2, SpaceId = 1, Photo = "photo2" },
+				new SpacePhoto { SpacePhotoId = 3, SpaceId = 2, Photo = "photo3" }
+
+				);
+		}
 	}
 }
