@@ -1,5 +1,4 @@
-﻿using Json.Net;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MilSiteCore.Models;
 using System;
 using System.Collections.Generic;
