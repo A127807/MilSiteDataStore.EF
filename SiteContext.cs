@@ -20,7 +20,7 @@ namespace MilSiteDataStore.EF
 
 		public DbSet<Space> Spaces { get; set; }
 
-		public DbSet<SpacePhoto> SpacePhotos { get; set; }
+		public DbSet<Image> Images { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Location>()
@@ -30,7 +30,7 @@ namespace MilSiteDataStore.EF
 			modelBuilder.Entity<Amenitie>()
 				.HasKey(s => s.AmID);
 			modelBuilder.Entity<Space>()
-				.HasMany(p => p.SpacePhotos)
+				.HasMany(p => p.Images)
 				.WithOne(s => s.Space)
 				.HasForeignKey(s => s.SpaceId);
 
@@ -59,11 +59,11 @@ namespace MilSiteDataStore.EF
 				new Space { SpaceId = 2, SpaceNumber = 2, SpacePhotoId = 2 },
 				new Space { SpaceId = 3, SpaceNumber = 3, SpacePhotoId = 3 }
 				);
-			modelBuilder.Entity<SpacePhoto>()
+			modelBuilder.Entity<Image>()
 				.HasData(
-				new SpacePhoto { SpacePhotoId = 1, SpaceId = 1, Photo = "photo1" },
-				new SpacePhoto { SpacePhotoId = 2, SpaceId = 1, Photo = "photo2" },
-				new SpacePhoto { SpacePhotoId = 3, SpaceId = 2, Photo = "photo3" }
+				new Image { ImageId = 1, SpaceId = 1, Photo = "photo1" },
+				new Image { ImageId = 2, SpaceId = 1, Photo = "photo2" },
+				new Image { ImageId = 3, SpaceId = 2, Photo = "photo3" }
 
 				);
 		}
